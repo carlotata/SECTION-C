@@ -35,7 +35,26 @@ const register = async (req, res) => {
   }
 };
 
-const login = async () => {};
+const login = async (req, res) => {
+  const { email, password } = req.body
+  
+  try {
+    const user = await User.findUserByEmail(email);
+
+    if (!user) return res.status(404).json({message: "USER NOT FOUND!"})
+
+
+    const CorrectPass = await bcrypt.compare(password, user.password)
+
+    if (CorrectPass) return res.status(200).json({message: `WELCOME ${user.name}!`})
+    else return res.status(401).json({message: "INCORRECT PASSWORD!"})
+
+  } catch {
+      return res.status(401).json(error)
+  }
+
+
+};
 
 module.exports = {
   register,
