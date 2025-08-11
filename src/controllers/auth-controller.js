@@ -37,9 +37,8 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body
-  
-  try {
 
+  try {
     const user = await User.findUserByEmail(email);
 
     if (!user) return res.status(404).json({message: "USER NOT FOUND!"})
@@ -50,9 +49,8 @@ const login = async (req, res) => {
     else return res.status(401).json({message: "INCORRECT PASSWORD!"})
 
   } catch (error) {
-    return res.status(401).json({message: "Something unexpected happened!"})
+    console.error(error);
   }
-
 };
 
 module.exports = {
