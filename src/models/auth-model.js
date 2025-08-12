@@ -16,11 +16,20 @@ const createTableUsers = async () => {
 
 const findUserByEmail = async (email) => {
   const normalized = email.trim().toLowerCase();
-  const user = await db.query("SELECT * FROM users WHERE email = ?", [
+  const user1 = await db.query("SELECT * FROM users WHERE email = ?", [
     normalized,
   ]);
 
-  return user[0];
+  return user1[0];
+};
+
+const findUserByName = async (name) => {
+   const normalized = name.trim().toLowerCase();
+   const user2 = await db.query("SELECT * FROM users WHERE name = ?", [
+      normalized,
+   ]);
+
+   return user2[0];
 };
 
 const createUser = async (name, email, password) => {
@@ -34,4 +43,4 @@ const createUser = async (name, email, password) => {
   return user;
 };
 
-module.exports = { createTableUsers, findUserByEmail, createUser };
+module.exports = { createTableUsers, findUserByEmail, findUserByName, createUser };
